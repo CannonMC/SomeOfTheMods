@@ -10,7 +10,7 @@ import net.minecraft.util.EnumChatFormatting;
 public class Command extends CommandBase{
 	
 	private EntityPlayerSP thePlayer;
-
+	//Test
 	@Override
 	public String getCommandName() {
 		return "automove";
