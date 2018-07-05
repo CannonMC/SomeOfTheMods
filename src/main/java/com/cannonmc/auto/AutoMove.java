@@ -1,9 +1,6 @@
 package com.cannonmc.auto;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
