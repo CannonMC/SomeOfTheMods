@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-@Mod(modid = "am", version = "1.0", acceptedMinecraftVersions = "1.8")
+@Mod(modid = "auto", version = "1.0", acceptedMinecraftVersions = "1.8")
 public class AutoMove {
 	private static boolean active;
 	private KeyBinding toggle;
