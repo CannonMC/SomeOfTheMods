@@ -47,7 +47,7 @@ public class AutoMove {
 
 	@SubscribeEvent
 	public void onTick(final TickEvent.ClientTickEvent e) {
-
+		
 		// The movements
 		final int keySprint = this.mc.gameSettings.keyBindSprint.getKeyCode();
 		final int keyJump = this.mc.gameSettings.keyBindJump.getKeyCode();
