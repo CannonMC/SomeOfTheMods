@@ -102,7 +102,7 @@ public class AutoMove {
 					KeyBinding.setKeyBindState(keyForward, false);
 					KeyBinding.setKeyBindState(keyBackwards, false);
 					if (currentX < finishX) {
-						mc.thePlayer.setAngles(-50, 0);	
+						mc.thePlayer.setAngles(-600, 0);	
 					}else if (currentX > finishX) {
 						mc.thePlayer.setAngles(600, 0);	
 					}
