@@ -1,11 +1,11 @@
 package com.cannonmc.auto;
 
 import org.lwjgl.input.Keyboard;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
-import net.minecraft.server.management.PlayerProfileCache;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
@@ -69,6 +69,7 @@ public class AutoMove {
 		if (AutoMove.active) {
 			final KeyBinding toggle2 = this.toggle;
 			int playerRotation = MathHelper.floor_double((double) (mc.thePlayer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+			
 			double currentX = round(mc.thePlayer.posX, 0);
 			double currentZ = round(mc.thePlayer.posZ, 0);
 			int posAcu = 1;
@@ -79,6 +80,13 @@ public class AutoMove {
 			// -X = 1 WEST
 			// -Z = 2 NORTH
 			// +X = 3 EAST
+			
+			//WIP direction
+			int playerRotationTight = (int)mc.thePlayer.rotationYaw;
+			if (playerRotationTight < 0) playerRotationTight += 360;
+			playerRotationTight+=22;
+			playerRotationTight%=360;
+			int facing = playerRotationTight/ 45;
 			
 			//Prints out player rotation to chat
 			mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + Integer.toString(playerRotation)));
