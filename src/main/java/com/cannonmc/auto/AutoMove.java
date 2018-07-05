@@ -29,7 +29,6 @@ public class AutoMove {
 	private boolean prevState;
 
 	private int autotimer = 0;
-	private int attackdelay = ThreadLocalRandom.current().nextInt(10, 30);
 	public int jumptries = 0;
 	public int cooldown = 10;
 
@@ -98,6 +97,8 @@ public class AutoMove {
 			// +X = 3 EAST
 
 			// System.out.println(posStart);
+			
+			
 
 			if (cooldown != 0) {
 				cooldown -= 1;
