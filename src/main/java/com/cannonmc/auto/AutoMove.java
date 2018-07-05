@@ -41,8 +41,8 @@ public class AutoMove {
 	public void postinit(final FMLPostInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register((Object) this);
 		ClientRegistry.registerKeyBinding(this.toggle = new KeyBinding("Toggle automovement", 19, "key.categories.movement"));this.mc = Minecraft.getMinecraft();
-
 		ClientCommandHandler.instance.registerCommand(new Command());
+		MinecraftForge.EVENT_BUS.register((Object)new ChatMonitor());
 	}
 
 	@SubscribeEvent

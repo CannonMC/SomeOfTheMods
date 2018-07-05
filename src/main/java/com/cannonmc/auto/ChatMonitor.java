@@ -26,6 +26,7 @@ public class ChatMonitor {
     @SubscribeEvent
     public void onChat(final ClientChatReceivedEvent event) {
         unformattedMessage = event.message.getUnformattedText();
-        mc.thePlayer.addChatMessage(new ChatComponentText(unformattedMessage));
+        System.out.println("This is a system printed message:" + unformattedMessage);
+        //mc.thePlayer.addChatMessage(new ChatComponentText(unformattedMessage));
     }
 }
