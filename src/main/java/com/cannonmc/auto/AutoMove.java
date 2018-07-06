@@ -203,7 +203,6 @@ public class AutoMove {
 				}
 			}
 			
-			
 			//Jump over block or break block if in the way 
 			if (round(mc.thePlayer.posX, posAcu) == round(mc.thePlayer.lastTickPosX, posAcu)
 					&& round(mc.thePlayer.posZ, posAcu) == round(mc.thePlayer.lastTickPosZ, posAcu)) {
