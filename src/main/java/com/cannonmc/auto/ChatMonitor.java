@@ -37,16 +37,15 @@ public class ChatMonitor {
     public void onChat(final ClientChatReceivedEvent event) {
         unformattedMessage = event.message.getFormattedText();
         System.out.println("System msg:" + unformattedMessage);
-
+        
+        /*
         SBNames = Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveNames();
         System.out.println(SBNames);
-
-        ScoreboardNames = Minecraft.getMinecraft().theWorld.getScoreboard().getObjective().getDisplayName();
+        ScoreboardNames = Minecraft.getMinecraft().theWorld.getScoreboard().getObjective("1").getDisplayName();
         System.out.println("2018 TEST:" + ScoreboardNames);
-
-
-        //S3BPacketScoreboardObjective scoreobjective = this.mc.theWorld.getScoreboard().func_96539_a(1);
-        //ScoreObjective objective = board.func_96539_a(1);
+        S3BPacketScoreboardObjective scoreobjective = this.mc.theWorld.getScoreboard().func_96539_a(1);
+        ScoreObjective objective = board.func_96539_a(1);
+        */
 
         if(unformattedMessage.contains("2000")) {
             System.out.println("You were born in the year 2000!");

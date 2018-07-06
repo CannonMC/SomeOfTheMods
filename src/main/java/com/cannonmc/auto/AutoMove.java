@@ -1,5 +1,7 @@
 package com.cannonmc.auto;
 
+import java.util.Random;
+
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.Minecraft;
@@ -7,8 +9,6 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,24 +25,29 @@ public class AutoMove {
 	public Minecraft mc;
 	private EntityPlayerSP thePlayer;
 	private boolean prevState;
+	
+	public static GoalPicker picker = new GoalPicker();
+	static Random rand = new Random();
+
 
 	private int autotimer = 0;
 	public int jumptries = 0;
 	public int cooldown = 10;
 
-	public static double finishX = 0;
-	public static double finishZ = 0;
+	public static int finishX = 0;
+	public static int finishZ = 0;
 
 	public AutoMove() {
 		this.prevState = false;
 	}
-
+	
 	@Mod.EventHandler
 	public void postinit(final FMLPostInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register((Object) this);
 		ClientRegistry.registerKeyBinding(this.toggle = new KeyBinding("Toggle automovement", 19, "key.categories.movement"));this.mc = Minecraft.getMinecraft();
 		ClientCommandHandler.instance.registerCommand(new Command());
 		MinecraftForge.EVENT_BUS.register((Object)new ChatMonitor());
+		randomTeamPicker();
 	}
 
 	@SubscribeEvent
@@ -76,6 +81,8 @@ public class AutoMove {
 
 			BlockPos posStart = new BlockPos(mc.thePlayer.getPositionVector());
 			KeyBinding.setKeyBindState(keySprint, true);
+
+			
 			// +Z = 0 SOUTH
 			// -X = 1 WEST
 			// -Z = 2 NORTH
@@ -89,8 +96,7 @@ public class AutoMove {
 			int facing = playerRotationTight/ 45;
 			
 			//Prints out player rotation to chat
-			mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + Integer.toString(playerRotation)));
-			
+			//mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + Integer.toString(playerRotation)));
 			
 			//For moving to a set point
 			if (playerRotation == 0) {
@@ -223,6 +229,14 @@ public class AutoMove {
 			}
 
 		}
+	}
+	
+	
+	public static void randomTeamPicker() {
+		int number = rand.nextInt(4) + 1;
+		
+		finishX = picker.getX(number);
+		finishZ = picker.getZ(number);
 	}
 
 	//Function to round doubles

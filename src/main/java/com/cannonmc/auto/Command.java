@@ -30,8 +30,9 @@ public class Command extends CommandBase{
 			AutoMove.finishX = Integer.parseInt(args[0]);
 			AutoMove.finishZ = Integer.parseInt(args[1]);
 			sender.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + "Coordinates set!"));
-		}else {
-			sender.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + "You need to give an X and Y coordinate,"));
+		}else{
+			AutoMove.randomTeamPicker();
+			sender.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + "New Team"));
 		}
 	}
 }
