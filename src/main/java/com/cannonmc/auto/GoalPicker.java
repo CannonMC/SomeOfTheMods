@@ -73,17 +73,19 @@ public class GoalPicker {
 		double playerX = Minecraft.getMinecraft().thePlayer.posX;
 		double playerZ = Minecraft.getMinecraft().thePlayer.posZ;
 		
-		if(playerX > -3 && playerX < 3) { //Red or Green
+		if(playerX > -3 && playerX < 3) { //Green or Yellow
 			if (playerZ < 0) {
-				playersTeam = "red";
-			}else {
 				playersTeam= "green";
-			}
-		}else { //Blue or Yellow
-			if(playerX < 0) {
-				playersTeam= "blue";
+				
 			}else {
 				playersTeam= "yellow";
+				
+			}
+		}else { //Red or Blue
+			if(playerX > 0) {
+				playersTeam = "red";
+			}else {
+				playersTeam= "blue";
 			}
 		}
 		
