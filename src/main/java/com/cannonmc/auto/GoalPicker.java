@@ -2,6 +2,10 @@ package com.cannonmc.auto;
 
 import java.util.Random;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
+
 public class GoalPicker {
 	
 	public static int generalGoal = 35; // (X, 0) (Red team)
@@ -48,6 +52,14 @@ public class GoalPicker {
 			return 0;
 		}
 
+	}
+	
+	public void detectPlayersTeam() {
+		double playerX = Minecraft.getMinecraft().thePlayer.posX;
+		double playerZ = Minecraft.getMinecraft().thePlayer.posZ;
+		String teamColour = null;
+		
+		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "You team has been detected as: " + teamColour));
 	}
 	
 }
