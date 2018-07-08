@@ -46,8 +46,8 @@ public class AutoMove {
 		MinecraftForge.EVENT_BUS.register((Object) this);
 		ClientRegistry.registerKeyBinding(this.toggle = new KeyBinding("Toggle automovement", 19, "key.categories.movement"));this.mc = Minecraft.getMinecraft();
 		ClientCommandHandler.instance.registerCommand(new Command());
+		ClientCommandHandler.instance.registerCommand(new DetectTeamCommand());
 		MinecraftForge.EVENT_BUS.register((Object)new ChatMonitor());
-		randomTeamPicker();
 	}
 
 	@SubscribeEvent
@@ -203,6 +203,13 @@ public class AutoMove {
 				}
 			}
 			
+			//Detect if player has fallen
+			if (mc.thePlayer.posY < 70) {
+				System.out.println("Player has fallen, repicking target...");
+				randomTeamPicker();
+			}
+			
+			
 			//Jump over block or break block if in the way 
 			if (round(mc.thePlayer.posX, posAcu) == round(mc.thePlayer.lastTickPosX, posAcu)
 					&& round(mc.thePlayer.posZ, posAcu) == round(mc.thePlayer.lastTickPosZ, posAcu)) {
@@ -231,11 +238,16 @@ public class AutoMove {
 	}
 	
 	
+	//Used to pick a team to target in the game
 	public static void randomTeamPicker() {
 		int number = rand.nextInt(4) + 1;
 		
 		finishX = picker.getX(number);
 		finishZ = picker.getZ(number);
+		if(finishX == 808) { //Checks for error code
+			System.out.println("Team matches target, retrying...");
+			randomTeamPicker();
+		}
 	}
 
 	//Function to round doubles

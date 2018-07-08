@@ -2,6 +2,10 @@ package com.cannonmc.auto;
 
 
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
+
 public class GoalPicker {
 	
 	public static int generalGoal = 35; // (X, 0) (Red team)
@@ -11,18 +15,32 @@ public class GoalPicker {
 	public static int[] blueGoal = {-generalGoal, 0};
 	public static int[] greenGoal = {0, -generalGoal};
 	
+	public static String playersTeam;
+	
 	public static int getX(int teamChoice) {
 		System.out.println(teamChoice);
 		if(teamChoice == 1) {
+			if (playersTeam == "red") {
+				return 808; //Code for when target matches the team the player is on
+			}
 			return redGoal[0];
 			
 		}else if (teamChoice == 2) {
+			if (playersTeam == "yellow") {
+				return 808; 
+			}
 			return yellowGoal[0];
 			
 		}else if (teamChoice == 3) {
+			if (playersTeam == "blue") {
+				return 808; 
+			}
 			return blueGoal[0];
 			
 		}else if (teamChoice == 4) {
+			if (playersTeam == "green") {
+				return 808; 
+			}
 			return greenGoal[0];
 			
 		}else {
@@ -48,6 +66,30 @@ public class GoalPicker {
 			return 0;
 		}
 
+	}
+
+	//Detects which team the player is on
+	public static void detectPlayersTeam() {
+		double playerX = Minecraft.getMinecraft().thePlayer.posX;
+		double playerZ = Minecraft.getMinecraft().thePlayer.posZ;
+		
+		if(playerX > -3 && playerX < 3) { //Green or Yellow
+			if (playerZ < 0) {
+				playersTeam= "green";
+				
+			}else {
+				playersTeam= "yellow";
+				
+			}
+		}else { //Red or Blue
+			if(playerX > 0) {
+				playersTeam = "red";
+			}else {
+				playersTeam= "blue";
+			}
+		}
+		
+		Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "You team has been detected as: " + playersTeam));
 	}
 	
 }
