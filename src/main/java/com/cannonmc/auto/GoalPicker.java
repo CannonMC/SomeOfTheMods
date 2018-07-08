@@ -1,6 +1,6 @@
 package com.cannonmc.auto;
 
-import java.util.Random;
+
 
 public class GoalPicker {
 	

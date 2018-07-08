@@ -2,6 +2,7 @@ package com.cannonmc.auto;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiPlayerTabOverlay;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.server.S3BPacketScoreboardObjective;
@@ -29,27 +30,18 @@ public class ChatMonitor {
     public String unformattedMessage;
     public String ScoreboardNames;
 
-
-
-
-
     @SubscribeEvent
     public void onChat(final ClientChatReceivedEvent event) {
         unformattedMessage = event.message.getFormattedText();
         System.out.println("System msg:" + unformattedMessage);
-        
-        /*
-        SBNames = Minecraft.getMinecraft().theWorld.getScoreboard().getObjectiveNames();
-        System.out.println(SBNames);
-        ScoreboardNames = Minecraft.getMinecraft().theWorld.getScoreboard().getObjective("1").getDisplayName();
-        System.out.println("2018 TEST:" + ScoreboardNames);
-        S3BPacketScoreboardObjective scoreobjective = this.mc.theWorld.getScoreboard().func_96539_a(1);
-        ScoreObjective objective = board.func_96539_a(1);
-        */
-
-        if(unformattedMessage.contains("2000")) {
-            System.out.println("You were born in the year 2000!");
+        //§r§f§lThe Bridge§r§8 - §r§e§l2v2v2v2§r
+        //Red wins = §r§c§lRED WINS!§r
+        //Blue Wins = §r§9§lBlue WINS!§r
+        if(unformattedMessage.contains("§r§f§lThe Bridge§r§8 - §r§e§l1v1§r")) {
+            AutoMove.active = true;
+            System.out.println("Auto Move has been activated!");
+        } else if(unformattedMessage.contains("§r§c§lRED WINS!§r") || unformattedMessage.contains("§r§9§lBlue WINS!§r")) {
+            AutoMove.active = false;
         }
-        //mc.thePlayer.addChatMessage(new ChatComponentText(unformattedMessage));
     }
 }
