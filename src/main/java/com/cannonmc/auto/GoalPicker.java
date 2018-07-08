@@ -1,6 +1,6 @@
 package com.cannonmc.auto;
 
-import java.util.Random;
+
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;

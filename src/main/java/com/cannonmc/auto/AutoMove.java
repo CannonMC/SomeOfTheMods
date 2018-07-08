@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 @Mod(modid = "auto", version = "1.0", acceptedMinecraftVersions = "1.8")
 public class AutoMove {
-	private static boolean active;
+	public static boolean active;
 	private KeyBinding toggle;
 	public Minecraft mc;
 	private EntityPlayerSP thePlayer;
