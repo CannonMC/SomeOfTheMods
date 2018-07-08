@@ -23,6 +23,7 @@ public class ChatMonitor {
         if(unformattedMessage.contains("§r§f§lThe Bridge§r§8 - §r§e§l1v1§r")) {
             AutoMove.active = true;
             System.out.println("Auto Move has been activated!");
+            GoalPicker.detectPlayersTeam();
         } else if(unformattedMessage.contains("§r§c§lRED WINS!§r")) {
             AutoMove.active = false;
             System.out.println("Auto Move has now been deactivated because red won!");
