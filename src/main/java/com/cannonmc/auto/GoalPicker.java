@@ -23,28 +23,24 @@ public class GoalPicker {
 			if (playersTeam == "red") {
 				return 808; //Code for when target matches the team the player is on
 			}
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Red"));
 			return redGoal[0];
 			
 		}else if (teamChoice == 2) {
 			if (playersTeam == "yellow") {
 				return 808; 
 			}
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Yellow"));
 			return yellowGoal[0];
 			
 		}else if (teamChoice == 3) {
 			if (playersTeam == "blue") {
 				return 808; 
 			}
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Blue"));
 			return blueGoal[0];
 			
 		}else if (teamChoice == 4) {
 			if (playersTeam == "green") {
 				return 808; 
 			}
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Green"));
 			return greenGoal[0];
 			
 		}else {

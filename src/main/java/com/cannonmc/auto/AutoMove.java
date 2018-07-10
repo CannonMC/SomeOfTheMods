@@ -206,6 +206,7 @@ public class AutoMove {
 			//Detect if player has fallen
 			if (mc.thePlayer.posY < 70) {
 				System.out.println("Player has fallen, repicking target...");
+				KeyBinding.setKeyBindState(keyBackwards, false);
 				randomTeamPicker();
 			}
 			
