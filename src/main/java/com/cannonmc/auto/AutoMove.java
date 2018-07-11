@@ -9,6 +9,8 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -75,8 +77,8 @@ public class AutoMove {
 			final KeyBinding toggle2 = this.toggle;
 			int playerRotation = MathHelper.floor_double((double) (mc.thePlayer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 			
-			double currentX = round(mc.thePlayer.posX, 0);
-			double currentZ = round(mc.thePlayer.posZ, 0);
+			double currentX = round(mc.thePlayer.posX, 1);
+			double currentZ = round(mc.thePlayer.posZ, 1);
 			int posAcu = 1;
 
 			BlockPos posStart = new BlockPos(mc.thePlayer.getPositionVector());
@@ -100,13 +102,15 @@ public class AutoMove {
 			
 			//For moving to a set point
 			if (playerRotation == 0) {
-				if (currentZ < finishZ) {
+				if (currentZ < finishZ + -0.1) {
 					KeyBinding.setKeyBindState(keyForward, true);
-				} else if (currentZ > finishZ){
+					
+				} else if (currentZ > finishZ + 0.1){
 					KeyBinding.setKeyBindState(keyBackwards, true);
 				} else {
 					KeyBinding.setKeyBindState(keyForward, false);
 					KeyBinding.setKeyBindState(keyBackwards, false);
+					mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + "2"));
 					if (currentX < finishX) {
 						mc.thePlayer.setAngles(-600, 0);	
 					}else if (currentX > finishX) {
@@ -114,9 +118,9 @@ public class AutoMove {
 					}
 				}
 			}else if(playerRotation == 3) {
-				if (currentX < finishX) {
+				if (currentX < finishX - 0.1) {
 					KeyBinding.setKeyBindState(keyForward, true);
-				} else if (currentX > finishX){
+				} else if (currentX > finishX + 0.1){
 					KeyBinding.setKeyBindState(keyBackwards, true);
 				} else {
 					KeyBinding.setKeyBindState(keyForward, false);
@@ -127,10 +131,10 @@ public class AutoMove {
 						mc.thePlayer.setAngles(600, 0);	
 					}
 				}
-			}else if(playerRotation == 1) {
-				if (currentX > finishX) {
+			}else if(playerRotation == 1) { // X DOESNT WORK!!!!
+				if (currentX > finishX + 0.1) {
 					KeyBinding.setKeyBindState(keyForward, true);
-				} else if (currentX < finishX){
+				} else if (currentX < finishX - 0.1){
 					KeyBinding.setKeyBindState(keyBackwards, true);
 				} else {
 					KeyBinding.setKeyBindState(keyForward, false);
@@ -142,9 +146,9 @@ public class AutoMove {
 					}
 				}
 			}else if(playerRotation == 2) {
-				if (currentZ > finishZ) {
+				if (currentZ > finishZ + 0.1) {
 					KeyBinding.setKeyBindState(keyForward, true);
-				} else if (currentZ < finishZ){
+				} else if (currentZ < finishZ - 0.1){
 					KeyBinding.setKeyBindState(keyBackwards, true);
 				} else {
 					KeyBinding.setKeyBindState(keyForward, false);
