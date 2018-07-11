@@ -22,16 +22,19 @@ public class ChatMonitor {
         unformattedMessage = event.message.getFormattedText();
         unformattedMessage = EnumChatFormatting.getTextWithoutFormattingCodes(unformattedMessage);
         System.out.println("System msg:" + unformattedMessage);
-        //§r§f§lThe Bridge§r§8 - §r§e§l2v2v2v2§r
-        //Red wins = §r§c§lRED WINS!§r
-        //Blue Wins = §r§9§lBlue WINS!§r
         if (unformattedMessage.startsWith(" ")) {
         	if(unformattedMessage.contains("The Bridge - 2v2v2v2")) {
+        		AutoMove.bridgeMode = "FOURTEAM"; // FOURTEAM
                 AutoMove.active = true;
-                System.out.println("AutoMove has been activated!");
+                System.out.println("AutoMove has been activated for four team!");
                 GoalPicker.detectPlayersTeam();
                 AutoMove.randomTeamPicker();
-            } else if(unformattedMessage.contains(" WINS!")) {
+            }else if (unformattedMessage.contains("The Bridge - 1v1")) {
+            	AutoMove.bridgeMode = "TWOTEAM"; // TWOTEAM
+            	AutoMove.active = true;
+                System.out.println("AutoMove has been activated for two team!");
+                GoalPicker.detectPlayersTeam();
+            }else if(unformattedMessage.contains(" WINS!")) {
                 AutoMove.active = false;
                 System.out.println("AutoMove has been deactivated!");
             }

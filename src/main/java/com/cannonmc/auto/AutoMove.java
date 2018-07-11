@@ -38,6 +38,8 @@ public class AutoMove {
 
 	public static int finishX = 0;
 	public static int finishZ = 0;
+	
+	public static String bridgeMode; //FOURTEAM, TWOTEAM
 
 	public AutoMove() {
 		this.prevState = false;
@@ -51,17 +53,17 @@ public class AutoMove {
 		ClientCommandHandler.instance.registerCommand(new DetectTeamCommand());
 		MinecraftForge.EVENT_BUS.register((Object)new ChatMonitor());
 	}
-
+	
+	//#### START OF ONTICK ####
 	@SubscribeEvent
 	public void onTick(final TickEvent.ClientTickEvent e) {
-		
 		// The movements
 		final int keySprint = this.mc.gameSettings.keyBindSprint.getKeyCode();
 		final int keyJump = this.mc.gameSettings.keyBindJump.getKeyCode();
 		final int keyForward = this.mc.gameSettings.keyBindForward.getKeyCode();
 		final int keyBackwards = this.mc.gameSettings.keyBindBack.getKeyCode();
 		final int keyAttack = this.mc.gameSettings.keyBindAttack.getKeyCode();
-
+		
 		if (this.toggle.isPressed()) {
 			AutoMove.active = !AutoMove.active;
 			if (!AutoMove.active && keySprint > 0) {
@@ -73,10 +75,10 @@ public class AutoMove {
 				KeyBinding.setKeyBindState(keyAttack, false);
 			}
 		}
+		
 		if (AutoMove.active) {
 			final KeyBinding toggle2 = this.toggle;
 			int playerRotation = MathHelper.floor_double((double) (mc.thePlayer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-			
 			double currentX = round(mc.thePlayer.posX, 1);
 			double currentZ = round(mc.thePlayer.posZ, 1);
 			int posAcu = 1;
@@ -84,89 +86,82 @@ public class AutoMove {
 			BlockPos posStart = new BlockPos(mc.thePlayer.getPositionVector());
 			KeyBinding.setKeyBindState(keySprint, true);
 
-			
 			// +Z = 0 SOUTH
 			// -X = 1 WEST
 			// -Z = 2 NORTH
 			// +X = 3 EAST
-			
-			//WIP direction
-			int playerRotationTight = (int)mc.thePlayer.rotationYaw;
-			if (playerRotationTight < 0) playerRotationTight += 360;
-			playerRotationTight+=22;
-			playerRotationTight%=360;
-			int facing = playerRotationTight/ 45;
-			
+	
 			//Prints out player rotation to chat
 			//mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + Integer.toString(playerRotation)));
 			
-			//For moving to a set point
-			if (playerRotation == 0) {
-				if (currentZ < finishZ + -0.1) {
-					KeyBinding.setKeyBindState(keyForward, true);
-					
-				} else if (currentZ > finishZ + 0.1){
-					KeyBinding.setKeyBindState(keyBackwards, true);
-				} else {
-					KeyBinding.setKeyBindState(keyForward, false);
-					KeyBinding.setKeyBindState(keyBackwards, false);
-					mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + "2"));
-					if (currentX < finishX) {
-						mc.thePlayer.setAngles(-600, 0);	
-					}else if (currentX > finishX) {
-						mc.thePlayer.setAngles(600, 0);	
+			if(bridgeMode == "FOURTEAM") {
+				if (playerRotation == 0) {
+					if (currentZ < finishZ - 0.1) { //Works as it should
+						KeyBinding.setKeyBindState(keyForward, true);
+						
+					} else if (currentZ > finishZ + 0.1){
+						KeyBinding.setKeyBindState(keyBackwards, true);
+					} else {
+						KeyBinding.setKeyBindState(keyForward, false);
+						KeyBinding.setKeyBindState(keyBackwards, false);
+						if (currentX < finishX) {
+							mc.thePlayer.setAngles(-600, 0);	
+						}else if (currentX > finishX) {
+							mc.thePlayer.setAngles(600, 0);	
+						}
+					}
+				}else if(playerRotation == 3) {
+					if (currentX < finishX - 0.1) {
+						KeyBinding.setKeyBindState(keyForward, true);
+					} else if (currentX > finishX + 0.1){
+						KeyBinding.setKeyBindState(keyBackwards, true);
+					} else {
+						KeyBinding.setKeyBindState(keyForward, false);
+						KeyBinding.setKeyBindState(keyBackwards, false);
+						if (currentZ > finishZ) {
+							mc.thePlayer.setAngles(-600, 0);			
+						}else if (currentZ < finishZ) {
+							mc.thePlayer.setAngles(600, 0);	
+						}
+					}
+				}else if(playerRotation == 1) { 
+					if (currentX > finishX + 0.9) { 
+						KeyBinding.setKeyBindState(keyForward, true);
+					} else if (currentX < finishX - 0.9){
+						KeyBinding.setKeyBindState(keyBackwards, true);
+					} else {
+						KeyBinding.setKeyBindState(keyForward, false);
+						KeyBinding.setKeyBindState(keyBackwards, false);
+						if (currentZ < finishZ) {
+							mc.thePlayer.setAngles(-600, 0);			
+						}else if (currentZ > finishZ) {
+							mc.thePlayer.setAngles(600, 0);	
+						}
+					}
+				}else if(playerRotation == 2) {
+					if (currentZ > finishZ + 0.9) {
+						KeyBinding.setKeyBindState(keyForward, true);
+					} else if (currentZ < finishZ - 0.9){
+						KeyBinding.setKeyBindState(keyBackwards, true);
+					} else {
+						KeyBinding.setKeyBindState(keyForward, false);
+						KeyBinding.setKeyBindState(keyBackwards, false);
+						if (currentX > finishX) {
+							mc.thePlayer.setAngles(-600, 0);			
+						}else if (currentX < finishX) {
+							mc.thePlayer.setAngles(600, 0);	
+						}
 					}
 				}
-			}else if(playerRotation == 3) {
-				if (currentX < finishX - 0.1) {
-					KeyBinding.setKeyBindState(keyForward, true);
-				} else if (currentX > finishX + 0.1){
-					KeyBinding.setKeyBindState(keyBackwards, true);
-				} else {
-					KeyBinding.setKeyBindState(keyForward, false);
-					KeyBinding.setKeyBindState(keyBackwards, false);
-					if (currentZ > finishZ) {
-						mc.thePlayer.setAngles(-600, 0);			
-					}else if (currentZ < finishZ) {
-						mc.thePlayer.setAngles(600, 0);	
-					}
-				}
-			}else if(playerRotation == 1) { // X DOESNT WORK!!!!
-				if (currentX > finishX + 0.1) {
-					KeyBinding.setKeyBindState(keyForward, true);
-				} else if (currentX < finishX - 0.1){
-					KeyBinding.setKeyBindState(keyBackwards, true);
-				} else {
-					KeyBinding.setKeyBindState(keyForward, false);
-					KeyBinding.setKeyBindState(keyBackwards, false);
-					if (currentZ < finishZ) {
-						mc.thePlayer.setAngles(-600, 0);			
-					}else if (currentZ > finishZ) {
-						mc.thePlayer.setAngles(600, 0);	
-					}
-				}
-			}else if(playerRotation == 2) {
-				if (currentZ > finishZ + 0.1) {
-					KeyBinding.setKeyBindState(keyForward, true);
-				} else if (currentZ < finishZ - 0.1){
-					KeyBinding.setKeyBindState(keyBackwards, true);
-				} else {
-					KeyBinding.setKeyBindState(keyForward, false);
-					KeyBinding.setKeyBindState(keyBackwards, false);
-					if (currentX > finishX) {
-						mc.thePlayer.setAngles(-600, 0);			
-					}else if (currentX < finishX) {
-						mc.thePlayer.setAngles(600, 0);	
-					}
-				}
+			} else if (bridgeMode == "TWOTEAM") {
+				KeyBinding.setKeyBindState(keyForward, true);
 			}
 			
-
-			//Jump over air
+			
+			//This is for jump over gaps
 			if (cooldown != 0) {
 				cooldown -= 1;
 			}
-
 			if (playerRotation == 0) {
 				if (mc.theWorld.getBlockState(posStart.down().south()).getBlock() == Blocks.air) {
 					if (cooldown == 0) {
@@ -207,14 +202,16 @@ public class AutoMove {
 				}
 			}
 			
-			//Detect if player has fallen
+			//Detect if the player has fallen
 			if (mc.thePlayer.posY < 70) {
-				System.out.println("Player has fallen, repicking target...");
+				System.out.println("Player has fallen....");
 				KeyBinding.setKeyBindState(keyBackwards, false);
 				KeyBinding.setKeyBindState(keyAttack, false);
-				randomTeamPicker();
+				if(bridgeMode == "FOURTEAM") {
+					randomTeamPicker();
+				}
+
 			}
-			
 			
 			//Jump over block or break block if in the way 
 			if (round(mc.thePlayer.posX, posAcu) == round(mc.thePlayer.lastTickPosX, posAcu)
@@ -241,8 +238,9 @@ public class AutoMove {
 			}
 
 		}
+		
 	}
-	
+	//#### END OF ONTICK ####
 	
 	//Used to pick a team to target in the game
 	public static void randomTeamPicker() {
@@ -256,7 +254,7 @@ public class AutoMove {
 		}
 	}
 
-	//Function to round doubles
+	//Function to round doubles to a given decimal place
 	public static double round(double value, int places) {
 		if (places < 0)
 			throw new IllegalArgumentException();
