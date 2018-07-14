@@ -1,4 +1,6 @@
-package com.cannonmc.auto;
+package com.cannonmc.auto.command;
+
+import com.cannonmc.auto.GoalPicker;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;

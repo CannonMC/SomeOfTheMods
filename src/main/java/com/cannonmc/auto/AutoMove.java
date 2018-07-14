@@ -4,6 +4,10 @@ import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 
+import com.cannonmc.auto.command.AutoQuitCommand;
+import com.cannonmc.auto.command.Command;
+import com.cannonmc.auto.command.DetectTeamCommand;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
@@ -49,8 +53,11 @@ public class AutoMove {
 	public void postinit(final FMLPostInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register((Object) this);
 		ClientRegistry.registerKeyBinding(this.toggle = new KeyBinding("Toggle automovement", 19, "key.categories.movement"));this.mc = Minecraft.getMinecraft();
+		
 		ClientCommandHandler.instance.registerCommand(new Command());
 		ClientCommandHandler.instance.registerCommand(new DetectTeamCommand());
+		ClientCommandHandler.instance.registerCommand(new AutoQuitCommand());
+		
 		MinecraftForge.EVENT_BUS.register((Object)new ChatMonitor());
 	}
 	
@@ -90,9 +97,6 @@ public class AutoMove {
 			// -X = 1 WEST
 			// -Z = 2 NORTH
 			// +X = 3 EAST
-	
-			//Prints out player rotation to chat
-			//mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + Integer.toString(playerRotation)));
 			
 			if(bridgeMode == "FOURTEAM") {
 				if (playerRotation == 0) {

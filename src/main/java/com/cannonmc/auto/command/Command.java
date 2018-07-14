@@ -1,4 +1,6 @@
-package com.cannonmc.auto;
+package com.cannonmc.auto.command;
+
+import com.cannonmc.auto.AutoMove;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
