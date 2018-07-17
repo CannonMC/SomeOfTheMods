@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
@@ -39,7 +40,8 @@ public class ChatMonitor {
 					System.out.println("AutoMove has been activated for two team!");
 					GoalPicker.detectPlayersTeam();
 				} else if (unformattedMessage.contains(" WINS!")) {
-					AutoMove.active = false;
+					KeyBinding.onTick(AutoMove.keyToggle);
+					
 					System.out.println("AutoMove has been deactivated!");
 				}
 			}

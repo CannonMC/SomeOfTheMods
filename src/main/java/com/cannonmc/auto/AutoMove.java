@@ -27,10 +27,12 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 @Mod(modid = "auto", version = "1.0", acceptedMinecraftVersions = "1.8")
 public class AutoMove {
 	public static boolean active;
-	private KeyBinding toggle;
+	public KeyBinding toggle;
 	public Minecraft mc;
 	private EntityPlayerSP thePlayer;
 	private boolean prevState;
+	
+	public static int keyToggle;
 	
 	public static GoalPicker picker = new GoalPicker();
 	static Random rand = new Random();
@@ -52,7 +54,8 @@ public class AutoMove {
 	@Mod.EventHandler
 	public void postinit(final FMLPostInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register((Object) this);
-		ClientRegistry.registerKeyBinding(this.toggle = new KeyBinding("Toggle automovement", 19, "key.categories.movement"));this.mc = Minecraft.getMinecraft();
+		ClientRegistry.registerKeyBinding(this.toggle = new KeyBinding("Toggle automovement", 19, "key.categories.movement"));
+		this.mc = Minecraft.getMinecraft();
 		
 		ClientCommandHandler.instance.registerCommand(new Command());
 		ClientCommandHandler.instance.registerCommand(new DetectTeamCommand());
@@ -71,6 +74,9 @@ public class AutoMove {
 		final int keyBackwards = this.mc.gameSettings.keyBindBack.getKeyCode();
 		final int keyAttack = this.mc.gameSettings.keyBindAttack.getKeyCode();
 		
+		keyToggle = this.toggle.getKeyCode();
+		
+		//Toggle key
 		if (this.toggle.isPressed()) {
 			AutoMove.active = !AutoMove.active;
 			if (!AutoMove.active && keySprint > 0) {
@@ -82,6 +88,7 @@ public class AutoMove {
 				KeyBinding.setKeyBindState(keyAttack, false);
 			}
 		}
+		
 		
 		if (AutoMove.active) {
 			final KeyBinding toggle2 = this.toggle;
