@@ -260,7 +260,6 @@ public class AutoMove {
 				}
 
 			} else {
-
 				jumptries = 0;
 				KeyBinding.setKeyBindState(keyAttack, false);
 			}
