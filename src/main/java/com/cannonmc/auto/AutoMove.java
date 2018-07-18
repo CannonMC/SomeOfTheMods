@@ -37,15 +37,15 @@ public class AutoMove {
 	public static GoalPicker picker = new GoalPicker();
 	static Random rand = new Random();
 
-
 	private int autotimer = 0;
 	public int jumptries = 0;
 	public int cooldown = 10;
+	public int turnstep = 0;
 
 	public static int finishX = 0;
 	public static int finishZ = 0;
 	
-	public static String bridgeMode; //FOURTEAM, TWOTEAM
+	public static String bridgeMode = "FOURTEAM"; //FOURTEAM, TWOTEAM
 
 	public AutoMove() {
 		this.prevState = false;
@@ -54,14 +54,15 @@ public class AutoMove {
 	@Mod.EventHandler
 	public void postinit(final FMLPostInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register((Object) this);
+		MinecraftForge.EVENT_BUS.register((Object)new ChatMonitor());
+		
 		ClientRegistry.registerKeyBinding(this.toggle = new KeyBinding("Toggle automovement", 19, "key.categories.movement"));
 		this.mc = Minecraft.getMinecraft();
-		
 		ClientCommandHandler.instance.registerCommand(new Command());
 		ClientCommandHandler.instance.registerCommand(new DetectTeamCommand());
 		ClientCommandHandler.instance.registerCommand(new AutoQuitCommand());
 		
-		MinecraftForge.EVENT_BUS.register((Object)new ChatMonitor());
+		
 	}
 	
 	//#### START OF ONTICK ####
@@ -227,17 +228,17 @@ public class AutoMove {
 			//Jump over block or break block if in the way 
 			if (round(mc.thePlayer.posX, posAcu) == round(mc.thePlayer.lastTickPosX, posAcu)
 					&& round(mc.thePlayer.posZ, posAcu) == round(mc.thePlayer.lastTickPosZ, posAcu)) {
-				if (jumptries < 30) {
+				if (jumptries < 20) {
 					KeyBinding.setKeyBindState(keyJump, true);
 					jumptries += 1;
 				} else {
-					if (jumptries == 31) {
+					if (jumptries == 21) {
 						KeyBinding.setKeyBindState(keyJump, false);
 					}
 					KeyBinding.setKeyBindState(keyAttack, true);
 
 					jumptries += 1;
-					if (jumptries == 80) {
+					if (jumptries == 45) {
 						jumptries = 0;
 					}
 				}
