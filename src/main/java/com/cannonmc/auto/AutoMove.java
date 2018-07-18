@@ -5,16 +5,13 @@ import java.util.Random;
 import org.lwjgl.input.Keyboard;
 
 import com.cannonmc.auto.command.AutoQuitCommand;
-import com.cannonmc.auto.command.Command;
-import com.cannonmc.auto.command.DetectTeamCommand;
+import com.cannonmc.auto.command.AutoMoveCommand;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -46,7 +43,8 @@ public class AutoMove {
 	public static int finishZ = 0;
 	
 	public static String bridgeMode = "FOURTEAM"; //FOURTEAM, TWOTEAM
-
+	public static String bypassMode = "BREAK"; // BREAK, PLACE
+		
 	public AutoMove() {
 		this.prevState = false;
 	}
@@ -58,8 +56,7 @@ public class AutoMove {
 		
 		ClientRegistry.registerKeyBinding(this.toggle = new KeyBinding("Toggle automovement", 19, "key.categories.movement"));
 		this.mc = Minecraft.getMinecraft();
-		ClientCommandHandler.instance.registerCommand(new Command());
-		ClientCommandHandler.instance.registerCommand(new DetectTeamCommand());
+		ClientCommandHandler.instance.registerCommand(new AutoMoveCommand());
 		ClientCommandHandler.instance.registerCommand(new AutoQuitCommand());
 		
 		
@@ -74,6 +71,7 @@ public class AutoMove {
 		final int keyForward = this.mc.gameSettings.keyBindForward.getKeyCode();
 		final int keyBackwards = this.mc.gameSettings.keyBindBack.getKeyCode();
 		final int keyAttack = this.mc.gameSettings.keyBindAttack.getKeyCode();
+		final int keyPlaceBlock = this.mc.gameSettings.keyBindUseItem.getKeyCode();
 		
 		keyToggle = this.toggle.getKeyCode();
 		
@@ -87,6 +85,7 @@ public class AutoMove {
 				KeyBinding.setKeyBindState(keyForward, false);
 				KeyBinding.setKeyBindState(keyBackwards, false);
 				KeyBinding.setKeyBindState(keyAttack, false);
+				KeyBinding.setKeyBindState(keyPlaceBlock, false);
 			}
 		}
 		
@@ -235,12 +234,29 @@ public class AutoMove {
 					if (jumptries == 21) {
 						KeyBinding.setKeyBindState(keyJump, false);
 					}
-					KeyBinding.setKeyBindState(keyAttack, true);
-
-					jumptries += 1;
-					if (jumptries == 45) {
-						jumptries = 0;
+					
+					if(bypassMode == "BREAK") {
+						KeyBinding.setKeyBindState(keyAttack, true);
+						jumptries += 1;
+						if (jumptries == 45) {
+							jumptries = 0;
+						}
+						
+					}else if(bypassMode == "PLACE") {
+						KeyBinding.setKeyBindState(keyForward, false);
+						mc.thePlayer.setAngles(0, -600);
+						KeyBinding.setKeyBindState(keyJump, true);
+						KeyBinding.setKeyBindState(keyPlaceBlock, true);
+						jumptries += 1;
+						if (jumptries == 50) {
+							mc.thePlayer.setAngles(0, 600);
+							KeyBinding.setKeyBindState(keyPlaceBlock, false);
+							KeyBinding.setKeyBindState(keyJump, false);
+							KeyBinding.setKeyBindState(keyForward, true);
+							jumptries = 0;
+						}
 					}
+					
 				}
 
 			} else {
