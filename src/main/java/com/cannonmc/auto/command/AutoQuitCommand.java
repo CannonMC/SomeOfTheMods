@@ -1,6 +1,6 @@
 package com.cannonmc.auto.command;
 
-import com.cannonmc.auto.ChatMonitor;
+import com.cannonmc.auto.util.ChatMonitor;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;

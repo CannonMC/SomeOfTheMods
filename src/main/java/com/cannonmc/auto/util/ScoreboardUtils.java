@@ -1,4 +1,4 @@
-package com.cannonmc.auto;
+package com.cannonmc.auto.util;
 
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;

@@ -1,7 +1,9 @@
-package com.cannonmc.auto;
+package com.cannonmc.auto.util;
 
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
+
+import com.cannonmc.auto.AutoMove;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;

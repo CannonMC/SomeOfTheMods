@@ -1,4 +1,4 @@
-package com.cannonmc.auto;
+package com.cannonmc.auto.util;
 
 
 

@@ -5,6 +5,8 @@ import java.util.Random;
 import org.lwjgl.input.Keyboard;
 
 import com.cannonmc.auto.command.AutoQuitCommand;
+import com.cannonmc.auto.util.ChatMonitor;
+import com.cannonmc.auto.util.GoalPicker;
 import com.cannonmc.auto.command.AutoMoveCommand;
 
 import net.minecraft.client.Minecraft;

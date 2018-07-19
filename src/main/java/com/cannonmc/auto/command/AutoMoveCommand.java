@@ -1,8 +1,9 @@
 package com.cannonmc.auto.command;
 
 import com.cannonmc.auto.AutoMove;
-import com.cannonmc.auto.ScoreboardUtils;
-import com.cannonmc.auto.GoalPicker;
+import com.cannonmc.auto.util.GoalPicker;
+import com.cannonmc.auto.util.ScoreboardUtils;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.CommandBase;
