@@ -10,16 +10,6 @@ import java.util.Collection;
 
 public class MapDetecter {
 
-
-
-
-
-
-
-
-
-
-
     /*
         public static void ScoreboardInfo () {
         for (String s : getAllSBInfo(Minecraft.getMinecraft().theWorld.getScoreboard())){

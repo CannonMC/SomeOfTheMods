@@ -1,5 +1,7 @@
 package com.cannonmc.auto.command;
 
+import java.util.List;
+
 import com.cannonmc.auto.AutoMove;
 import com.cannonmc.auto.util.GoalPicker;
 import com.cannonmc.auto.util.ScoreboardUtils;
@@ -12,8 +14,6 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-
-import java.util.List;
 
 public class AutoMoveCommand extends CommandBase{
 	

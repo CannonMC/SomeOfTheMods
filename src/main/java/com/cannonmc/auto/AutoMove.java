@@ -4,10 +4,10 @@ import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 
+import com.cannonmc.auto.command.AutoMoveCommand;
 import com.cannonmc.auto.command.AutoQuitCommand;
 import com.cannonmc.auto.util.ChatMonitor;
 import com.cannonmc.auto.util.GoalPicker;
-import com.cannonmc.auto.command.AutoMoveCommand;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -26,6 +26,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 @Mod(modid = "auto", version = "1.0", acceptedMinecraftVersions = "1.8")
 public class AutoMove {
 	public static boolean active;
+	public static AutoMove instance;
 	public KeyBinding toggle;
 	public Minecraft mc;
 	private EntityPlayerSP thePlayer;
@@ -53,16 +54,19 @@ public class AutoMove {
 	
 	@Mod.EventHandler
 	public void postinit(final FMLPostInitializationEvent event) {
+		AutoMove.instance = this;
 		MinecraftForge.EVENT_BUS.register((Object) this);
 		MinecraftForge.EVENT_BUS.register((Object)new ChatMonitor());
-		
 		ClientRegistry.registerKeyBinding(this.toggle = new KeyBinding("Toggle automovement", 19, "key.categories.movement"));
 		this.mc = Minecraft.getMinecraft();
 		ClientCommandHandler.instance.registerCommand(new AutoMoveCommand());
 		ClientCommandHandler.instance.registerCommand(new AutoQuitCommand());
-		
-		
+
 	}
+	
+	public static AutoMove getInstance() {
+        return AutoMove.instance;
+    }
 	
 	//#### START OF ONTICK ####
 	@SubscribeEvent
