@@ -30,7 +30,7 @@ public class ChatMonitor {
 		
 		if (!AutoLeave) {
 			if (unformattedMessage.startsWith(" ")) {
-				if (unformattedMessage.contains("The Bridge - 2v2v2v2")) {
+				if (unformattedMessage.contains("The Bridge - 2v2v2v2") || unformattedMessage.contains("The Bridge - 3v3v3v3")) {
 					AutoMove.bridgeMode = "FOURTEAM"; // FOURTEAM
 					AutoMove.active = true;
 					System.out.println("AutoMove has been activated for four team!");
